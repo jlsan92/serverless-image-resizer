@@ -1,0 +1,26 @@
+---
+coverage:
+  # The lower bounds will be shown as red and upper bounds will be shown as green
+  range: 70..90
+  # Round to a single-precision coverage status
+  precision: 1
+
+  status:
+    # Project-level coverage configuration
+    project:
+      default:
+        # Allow 2% coverage drop when comparing changes against the base or previous commit
+        threshold: 2%
+    patch:
+      default:
+        # All PRs should have at least this much coverage to pass
+        target: 90%
+
+comment:
+  # Only include the following sections in the Codecov PR comments
+  layout: "diff, flags, files"
+
+parsers:
+  javascript:
+    # Enable support for Javascript's partial line coverage
+    enable_partials: yes

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Select which terraform definition should we work with
+# (this must match one of the directories in the infrastructure/ directory)
+TERRAFORM_DEFINITION="$1"
+
+# These variables will be sent to Docker as env vars -> required by terraform
+AWS_PROFILE=${AWS_PROFILE:-"serverless-resizer"}
+
+# Start terraform from within the container! 🐳
+exec docker run \
+  --name serverless-resizer-terraform \
+  --interactive \
+  --tty \
+  --rm \
+  --workdir /mnt/infrastructure \
+  --volume "$(pwd)/infrastructure":/mnt/infrastructure \
+  --volume "${HOME}/.aws":/root/.aws \
+  --env AWS_PROFILE="${AWS_PROFILE}" \
+  hashicorp/terraform:0.11.10 "${@}"

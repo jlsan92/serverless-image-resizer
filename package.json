@@ -1,0 +1,28 @@
+{
+  "name": "serverless-image-resizer",
+  "version": "0.0.1",
+  "description": "Serverless Image Resizer example",
+  "main": "serverless.yml",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Juan Sanchez <juan.sanchez@strv.com>",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.361.0"
+  },
+  "devDependencies": {
+    "@strv/eslint-config-javascript": "^9.1.0",
+    "chance": "^1.0.16",
+    "eslint": "^5.9.0",
+    "expect": "^23.6.0",
+    "mocha": "^5.2.0",
+    "mocha-http-detect": "^0.2.0",
+    "serverless-plugin-aws-alerts": "^1.2.4",
+    "serverless-prune-plugin": "^1.3.1",
+    "sinon": "^7.1.1"
+  }
+}

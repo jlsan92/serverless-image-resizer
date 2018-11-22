@@ -1,0 +1,40 @@
+---
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+  - 8.10.0
+
+branches:
+  only:
+   - master
+
+services:
+  - docker
+
+cache:
+  directories:
+    - node_modules
+
+before_install: 
+  - echo before install
+
+install:
+- echo install
+
+before_script:
+  - docker ps
+
+script:
+  - echo testing harder!
+
+after_success:
+  - echo succeed!
+
+env:
+  global:
+    - AWS_PROFILE=serverless-resizer
+    - NODE_ENV=test
+
+    # CODECOV_TOKEN
+    - secure: bF/LcWWdsc5/aG/gKKWI7FMGM3p3LD3l1tcaTDCVnwht3X/PKSmV6JPDCf4Zm8+N/V2HJnmObjPQ/BogkvA6tKztHnuPghVht47vbNEJfb9KYVfCD/sITpOEJjyYLGgw99bkRDWhjPvi0PJ+ZBPF0XxMiQH6Dcxnvn70twmqbctV0QnUXQt0JMzUFHM6rwu5fKsQ8elsZw01Pw6iS04phikwOPjKggAFhSm2NsZfbrg5b4GUCotEuqH0u9G9NTmJIb/sATjXT2sFEktn8/FdIm26+TTTY5tVn3EPFWVZxVsNj5z+z9rUwXvslLiY8Vkz1yzjPME3Dq2okFoCho08aegKqDhLPlTpr5/Dwy2sx9HOZPKbISDJWTXw29KPhhA/1LdF9rn8oPDH+R1gN6npl/ezvcAHMRpXxnryJ73Q8X9S4l55KpWBK6eCgnNQqbf0uDGZKDwNRr1ma+1sHi94Tp1Og6oZY4+tCjsI2PfuTt1hdb/OtJQZLAZR2/Vqs93fgXHZka9T/CvTF7mpvxH1iBk4RC3E7rI9NTNHvAK/mCktRQKsWn0evGP5iyMMnr82V1Iq/KnAFuTfN4MeCoa0xTcuXXzbao/TzPsV/9e8nQZQZZLXySjcuxc09dgI9eeEyb8rYGOtYeS6n4EIZ65h81Kex6FCmzHdlag1jZhjHso=

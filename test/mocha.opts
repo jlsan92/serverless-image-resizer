@@ -1,0 +1,5 @@
+--colors
+--recursive
+--check-leaks
+--require mocha-http-detect
+--require test/meta/setup

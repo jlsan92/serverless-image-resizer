@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+vendor
+**/.terraform/plugins
+**/.terraform/modules
+**/.terraform/environment
+
+
+# Local configuration
+.env
+.bashrc
+.npmrc
+
+# Generated files
+coverage
+*.tfplan
+infrastructure/*.outputs.json
+.serverless
+
+# Garbage
+*.lerna_backup
+*.log
+*~
+*#
+.DS_Store
+.nyc_output
+.eslintcache

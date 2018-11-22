@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+docker run \
+  --name amazon-linux-node \
+  --interactive \
+  --rm \
+  --volume "${HOME}/.aws":/root/.aws \
+  --volume "$(pwd)":/build \
+  --workdir /build \
+  jlsan92/amazon-linux-node:8.10.0 "$@"
