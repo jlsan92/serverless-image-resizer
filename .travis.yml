@@ -16,25 +16,39 @@ cache:
   directories:
     - node_modules
 
-before_install: 
-  - echo before install
+before_install: ./ci/install/before_install.sh
 
 install:
-- echo install
+  - npm i -g serverless
+  - npm install
 
 before_script:
   - docker ps
+  - ./bin/terraform init -input=false
 
 script:
   - echo testing harder!
 
 after_success:
-  - echo succeed!
+  - ./bin/terraform plan -out global.tfplan -input=false
 
 env:
   global:
     - AWS_PROFILE=serverless-resizer
     - NODE_ENV=test
+    - TF_IN_AUTOMATION=1
 
+    # AWS_CREDENTIALS_FILE
+    - secure: VJ4Op0kcpkNDbnCgB3LI6cuxVj1nqHUd0n2YoCz0A5KDBjzciZYdWDVrfVc9uOSs8c4Rq1t6ehqCAirs1A/Swf4OQx7MspJJaE3gZptJj8HvTEj7YkSv5O1FM16LivP0dTG55O8Cu8eVybN5bCZr6F3nNeYEnuVTrkSpjS2jgpoI/vyo8fTPETK7zWBNarI/OFNRWXVTINwfQeRILoJTriS6yOqu+eHDcXcsDyP5Z/S1WCcXn1wOJ4n/0DMzf0W9wAvNww7uvaG+/tK6UopKI+Wc1cClHcEjv6FTrRcVC4TUj8nO0sqeIuUg3THybM35r9VI9rMyBR2BDzaGXRSI4rDq5xB3pPmKqzTwjL5Ju3yrDXzp/gjZM/U7nfFlb7P8IRXDBkqYCJUvhRrg0f5TnqbUpMJLDZVH5PqM6V+vYvBhg9SXWRHPX7T35T03sv4Kxe0SFK+zbjLocHhIvLOjxzBoz+oWoWL/FozdPke3QAFCRdfbOFCMIYlN0Cf2cWi4pKfGJIZyLdm31BtqPDDU9gLhbRb5wBvjhqtH1HMxXYULweezi4NBHB2gQxBQMGrH7TvFVkT9sv4GKKFiAE0O4agO2rg/5V46bpX1G1IQZMll5qAiD1eDoLM+3jYb2IgkjSfcaB4tyh1ucgXEJA6R7OGnQix79fEvXZ65JzawUWI=
     # CODECOV_TOKEN
     - secure: bF/LcWWdsc5/aG/gKKWI7FMGM3p3LD3l1tcaTDCVnwht3X/PKSmV6JPDCf4Zm8+N/V2HJnmObjPQ/BogkvA6tKztHnuPghVht47vbNEJfb9KYVfCD/sITpOEJjyYLGgw99bkRDWhjPvi0PJ+ZBPF0XxMiQH6Dcxnvn70twmqbctV0QnUXQt0JMzUFHM6rwu5fKsQ8elsZw01Pw6iS04phikwOPjKggAFhSm2NsZfbrg5b4GUCotEuqH0u9G9NTmJIb/sATjXT2sFEktn8/FdIm26+TTTY5tVn3EPFWVZxVsNj5z+z9rUwXvslLiY8Vkz1yzjPME3Dq2okFoCho08aegKqDhLPlTpr5/Dwy2sx9HOZPKbISDJWTXw29KPhhA/1LdF9rn8oPDH+R1gN6npl/ezvcAHMRpXxnryJ73Q8X9S4l55KpWBK6eCgnNQqbf0uDGZKDwNRr1ma+1sHi94Tp1Og6oZY4+tCjsI2PfuTt1hdb/OtJQZLAZR2/Vqs93fgXHZka9T/CvTF7mpvxH1iBk4RC3E7rI9NTNHvAK/mCktRQKsWn0evGP5iyMMnr82V1Iq/KnAFuTfN4MeCoa0xTcuXXzbao/TzPsV/9e8nQZQZZLXySjcuxc09dgI9eeEyb8rYGOtYeS6n4EIZ65h81Kex6FCmzHdlag1jZhjHso=
+
+deploy:
+# Deploy global infrastructure updates using Terraform
+  - provider: script
+    skip_cleanup: true
+    script: ./ci/deploy/terraform/global.sh
+    on:
+      branch:
+        - master
+      repo: jlsan92/serverless-image-resizer

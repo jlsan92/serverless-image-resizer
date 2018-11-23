@@ -73,8 +73,8 @@ resource "aws_cloudfront_distribution" "media" {
 
   origin {
     origin_id   = "origin-api-gateway-${aws_s3_bucket.media.id}"
-    domain_name = "${var.image-resize-apig-domain}"
-    origin_path = "${var.image-resize-apig-path}"
+    domain_name = "${var.apig-domain}"
+    origin_path = "${var.apig-path}"
 
     custom_origin_config {
       http_port              = 80
