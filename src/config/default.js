@@ -14,4 +14,28 @@ module.exports = env => ({
     stdout: true,
     minLevel: 'debug',
   },
+  services: {
+    s3: {
+      bucket: 'medias.serverless-resizer.com',
+    },
+  },
+  operations: {
+    uploads: {
+      cdn: 'https://dummy-cdn.com',
+      validContent: {
+        png: {
+          type: 'image',
+          mime: 'image/png',
+          extension: 'png',
+          length: [0, 5242880],
+        },
+        jpeg: {
+          type: 'image',
+          mime: 'image/jpeg',
+          extension: 'jpg',
+          length: [0, 5242880],
+        },
+      },
+    },
+  },
 })
