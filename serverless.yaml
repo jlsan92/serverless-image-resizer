@@ -1,0 +1,87 @@
+service: image-resizer
+
+plugins:
+ - serverless-plugin-aws-alerts
+ - serverless-apigw-binary
+ - serverless-prune-plugin
+ - serverless-offline
+
+custom:
+  prune:
+    automatic: true
+    number: 5
+
+  bucket: medias.serverless-resizer.com
+
+  mimeTypes:
+    - 'image/jpeg'
+    - 'image/png'
+    - 'image/webp'
+
+  # Supported mime types for responses
+  apigwBinary:
+    types: ${self:custom.mimeTypes}
+
+  # CloudWatch alerts.
+  # ⚠️ You need to subscribe manually to the SNS topic in order to be notified
+  alerts:
+    stages:
+      - producton
+
+    dashboards: false
+
+    topics:
+      alarm: serverless-resizer-alerts-alarm
+    alarms:
+      - functionErrors
+      - functionDuration
+    definitions:
+      functionErrors:
+        period: 300
+        treatMissingData: notBreaching
+      functionDuration:
+        period: 300
+        threshold: 30000 # 30 seconds
+        treatMissingData: notBreaching
+
+package:
+  include:
+    - src/**
+    - node_modules/**
+
+provider:
+  name: aws
+  endpointType: REGIONAL # This prevents the API Gateway to be deployed with a predefined CloudFront distro
+  runtime: nodejs8.10
+  profile: serverless-resizer
+  memorySize: 512
+  timeout: 30
+  logRetentionInDays: 7
+  environment:
+    STAGE: ${opt:stage, 'production'}
+    BUCKET: ${self:custom.bucket}
+    MIME_TYPES: ${file(./mime-types.js):mimeTypes}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:ListBucket"
+      Resource:
+        - "arn:aws:s3:::${self:custom.bucket}"
+    - Effect: "Allow"
+      Action:
+        - "s3:ListObjects"
+        - "s3:Get*"
+        - "s3:PutObject*"
+      Resource:
+        - "arn:aws:s3:::${self:custom.bucket}/*"
+
+functions:
+  api:
+    handler: src/server.handler
+    events:
+      - http:
+          path: /
+          method: GET
+      - http:
+          path: /{any+}
+          method: ANY

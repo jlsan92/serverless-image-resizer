@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Serverless Image Resizer example",
   "main": "serverless.yml",
+  "engines": {
+    "node": "8.10.0",
+    "npm": "~6.0.1"
+  },
   "directories": {
     "test": "test"
   },
@@ -12,15 +16,25 @@
   "author": "Juan Sanchez <juan.sanchez@strv.com>",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.361.0"
+    "aws-sdk": "^2.361.0",
+    "koa": "^2.6.2",
+    "koa-body": "^4.0.4",
+    "koa-router": "^7.4.0",
+    "pino": "^5.9.0",
+    "ramda": "^0.26.0",
+    "serverless-http": "^1.8.0"
   },
   "devDependencies": {
     "@strv/eslint-config-javascript": "^9.1.0",
     "chance": "^1.0.16",
+    "dotenv": "^6.1.0",
     "eslint": "^5.9.0",
     "expect": "^23.6.0",
+    "js-yaml": "^3.12.0",
     "mocha": "^5.2.0",
     "mocha-http-detect": "^0.2.0",
+    "serverless-apigw-binary": "^0.4.4",
+    "serverless-offline": "^3.31.3",
     "serverless-plugin-aws-alerts": "^1.2.4",
     "serverless-prune-plugin": "^1.3.1",
     "sinon": "^7.1.1"
