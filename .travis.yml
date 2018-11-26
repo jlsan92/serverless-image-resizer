@@ -47,7 +47,7 @@ deploy:
 # Deploy global infrastructure updates using Terraform
   - provider: script
     skip_cleanup: true
-    script: ./ci/deploy/terraform/global.sh
+    script: ./ci/deploy/terraform.sh
     on:
       branch:
         - master
