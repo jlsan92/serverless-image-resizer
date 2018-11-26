@@ -5,6 +5,7 @@ plugins:
  - serverless-apigw-binary
  - serverless-prune-plugin
  - serverless-offline
+ - serverless-plugin-existing-s3
 
 custom:
   prune:
@@ -12,6 +13,8 @@ custom:
     number: 5
 
   bucket: medias.serverless-resizer.com
+  
+  dynamoTable: serverlessImages
 
   mimeTypes:
     - 'image/jpeg'
@@ -74,8 +77,25 @@ provider:
         - "s3:PutObject*"
       Resource:
         - "arn:aws:s3:::${self:custom.bucket}/*"
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:Scan"
+        - "dynamodb:PutItem"
+      Resource:
+        - "arn:aws:dynamodb:${opt:region, 'eu-west-1'}:805382315593:table/${self:custom.dynamoTable}"
+        - "arn:aws:dynamodb:${opt:region, 'eu-west-1'}:805382315593:table/${self:custom.dynamoTable}/*"
 
 functions:
+  worker:
+    handler: src/worker.handler
+    events:
+      - existingS3:
+          bucket: ${self:custom.bucket}
+          events:
+            - s3:ObjectCreated:*
+          rules:
+            - prefix: images/
+
   api:
     handler: src/server.handler
     events:

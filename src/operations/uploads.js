@@ -16,7 +16,7 @@ async function create(data) {
 
   const extension = valid.extension
 
-  const key = `${uuid.v4()}.${extension}`
+  const key = `images/${uuid.v4()}.${extension}`
 
   const result = await S3Service.createSignedPost({ key, metadata: valid })
 

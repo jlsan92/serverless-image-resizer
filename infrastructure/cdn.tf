@@ -9,11 +9,11 @@ variable "media-bucket" {
 }
 
 variable "apig-domain" {
-  default = "b81diyiw1i.execute-api.eu-west-1.amazonaws.com"
+  default = "b9vle3p63l.execute-api.eu-west-1.amazonaws.com"
 }
 
 variable "apig-path" {
-  default = "/production/TODO"
+  default = "/production/images"
 }
 
 # Resources
@@ -127,7 +127,7 @@ resource "aws_cloudfront_distribution" "media" {
     min_ttl     = 2592000
 
     forwarded_values {
-      query_string = false
+      query_string = true
 
       cookies {
         forward = "none"

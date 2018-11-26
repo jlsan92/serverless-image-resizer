@@ -18,10 +18,13 @@ module.exports = env => ({
     s3: {
       bucket: 'medias.serverless-resizer.com',
     },
+    dynamo: {
+      table: 'serverlessImages',
+    },
   },
   operations: {
     uploads: {
-      cdn: 'https://dummy-cdn.com',
+      cdn: 'https://d2gedc85e23iqc.cloudfront.net',
       validContent: {
         png: {
           type: 'image',
