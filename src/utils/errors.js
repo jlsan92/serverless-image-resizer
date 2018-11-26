@@ -11,7 +11,7 @@ class AppError extends Error {
     this.message = message
     this.status = status
     const stack = this.stack ? this.stack.split('\n') : this.stack
-    logger.error({
+    logger.warn({
       error: {
         name: this.name,
         message: this.message,

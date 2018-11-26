@@ -22,6 +22,7 @@ router.get('/test', authenticate, ctx => {
 
 router.post('/uploads', authenticate, uploads.create)
 
+router.get('/images', authenticate, images.getAll)
 router.use(handleNotFound)
 
 module.exports = router.routes()

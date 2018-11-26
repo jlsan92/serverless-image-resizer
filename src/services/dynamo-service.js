@@ -1,4 +1,3 @@
-/* eslint-disable id-length */
 'use strict'
 
 const AWS = require('aws-sdk')
@@ -7,9 +6,7 @@ const config = require('../config')
 class DynamoService {
   static $getInstance() {
     if (!this.instance) {
-      this.instance = new AWS.DynamoDB({
-        apiVersion: '2012-08-10',
-      })
+      this.instance = new AWS.DynamoDB.DocumentClient()
     }
 
     return this.instance
@@ -20,19 +17,23 @@ class DynamoService {
 
     const params = {
       Item: {
-        createdAt: {
-          N: `${createdAt}`,
-        },
-        url: {
-          S: url,
-        },
+        createdAt,
+        url,
       },
       TableName: `${config.services.dynamo.table}`,
     }
 
-    console.log(params)
+    return db.put(params).promise()
+  }
 
-    return db.putItem(params).promise()
+  static getMedias() {
+    const db = this.$getInstance()
+
+    const params = {
+      TableName: `${config.services.dynamo.table}`,
+    }
+
+    return db.scan(params).promise()
   }
 }
 

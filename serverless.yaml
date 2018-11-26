@@ -62,6 +62,7 @@ provider:
   logRetentionInDays: 7
   environment:
     STAGE: ${opt:stage, 'production'}
+    NODE_ENV: ${opt:stage, 'production'}
     BUCKET: ${self:custom.bucket}
     MIME_TYPES: ${file(./mime-types.js):mimeTypes}
   iamRoleStatements:
