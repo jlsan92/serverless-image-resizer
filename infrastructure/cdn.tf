@@ -13,7 +13,7 @@ variable "apig-domain" {
 }
 
 variable "apig-path" {
-  default = "/production/images"
+  default = "/production"
 }
 
 # Resources
