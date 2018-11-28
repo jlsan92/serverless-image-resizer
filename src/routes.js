@@ -2,8 +2,9 @@
 
 const Router = require('koa-router')
 const { handleErrors, handleNotFound } = require('./middleware/errors')
-const { authenticate } = require('./middleware/authentication')
+// const { authenticate } = require('./middleware/authentication')
 const uploads = require('./controllers/uploads')
+const images = require('./controllers/images')
 
 const router = new Router()
 router.use(handleErrors)
@@ -15,14 +16,11 @@ router.get('/', ctx => {
   }
 })
 
-router.get('/test', authenticate, ctx => {
-  ctx.status = 200
-  ctx.body = { message: 'secret data' }
-})
+router.post('/uploads', uploads.create)
 
-router.post('/uploads', authenticate, uploads.create)
+router.get('/images', images.getAll)
+router.get('/images/:key', images.get)
 
-router.get('/images', authenticate, images.getAll)
 router.use(handleNotFound)
 
 module.exports = router.routes()

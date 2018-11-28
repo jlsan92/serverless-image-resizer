@@ -20,7 +20,7 @@ class DynamoService {
         createdAt,
         url,
       },
-      TableName: `${config.services.dynamo.table}`,
+      TableName: config.services.dynamo.table,
     }
 
     return db.put(params).promise()
@@ -30,7 +30,7 @@ class DynamoService {
     const db = this.$getInstance()
 
     const params = {
-      TableName: `${config.services.dynamo.table}`,
+      TableName: config.services.dynamo.table,
     }
 
     return db.scan(params).promise()
