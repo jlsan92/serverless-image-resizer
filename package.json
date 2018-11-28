@@ -11,19 +11,22 @@
     "test": "test"
   },
   "scripts": {
+    "preinstall": "bin/amazon-linux npm install sharp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Juan Sanchez <juan.sanchez@strv.com>",
   "license": "MIT",
   "dependencies": {
+    "ajv": "^6.5.5",
     "aws-sdk": "^2.361.0",
-    "jsonschema": "^1.2.4",
     "koa": "^2.6.2",
     "koa-body": "^4.0.4",
+    "koa-pino-logger": "^2.1.3",
     "koa-router": "^7.4.0",
     "pino": "^5.9.0",
     "ramda": "^0.26.0",
     "serverless-http": "^1.8.0",
+    "sharp": "^0.21.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
