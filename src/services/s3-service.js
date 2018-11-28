@@ -15,17 +15,31 @@ class S3Service {
     return this.instance
   }
 
+  static getObject({
+    bucket: Bucket = config.services.s3.bucket,
+    key: Key,
+  }) {
+    const s3 = this.$getInstance()
+
+    const params = {
+      Bucket,
+      Key,
+    }
+
+    return s3.getObject(params).promise()
+  }
+
   static createSignedPost({
-    bucket = config.services.s3.bucket,
-    key,
+    bucket: Bucket = config.services.s3.bucket,
+    key: Key,
     metadata,
   }) {
     const s3 = this.$getInstance()
 
     const params = {
-      Bucket: bucket,
+      Bucket,
       Fields: {
-        key,
+        Key,
         'Content-Type': metadata.mime,
       },
       Conditions: [
