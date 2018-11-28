@@ -29,7 +29,7 @@ custom:
   # ⚠️ You need to subscribe manually to the SNS topic in order to be notified
   alerts:
     stages:
-      - producton
+      - production
 
     dashboards: false
 
@@ -106,3 +106,10 @@ functions:
       - http:
           path: /{any+}
           method: ANY
+          request:
+            parameters:
+              querystrings:
+                width: true
+                height: true
+                toWebp: true
+                thumbnail: true
