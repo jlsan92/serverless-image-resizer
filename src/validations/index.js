@@ -4,17 +4,16 @@ const Ajv = require('ajv')
 const errors = require('../utils/errors')
 const logger = require('../utils/logger')
 
-const validator = new Ajv({ coerceTypes: true })
+const ajv = new Ajv({ coerceTypes: true })
 
 function validate(schema, inputData) {
-  console.dir({ schema, inputData }, { depth: null })
+  const validator = ajv.compile(schema)
 
-  const valid = validator.validate(inputData, schema)
+  const valid = validator(inputData, schema)
 
-  console.log(valid)
   if (!valid) {
-    logger.info(validator.errors)
-    throw new errors.ValidationError(validator.errors)
+    logger.warn(validator.errors)
+    throw new errors.ValidationError(ajv.errorsText(validator.errors))
   }
 }
 

@@ -10,9 +10,11 @@ const get = {
     },
     width: {
       type: 'number',
+      minimum: 10,
     },
     height: {
       type: 'number',
+      minimum: 10,
     },
     toWebp: {
       type: 'boolean',

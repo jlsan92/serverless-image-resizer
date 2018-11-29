@@ -3,6 +3,7 @@
 const create = {
   type: 'object',
   required: ['contentType'],
+  additionalProperties: false,
   properties: {
     contentType: {
       type: 'string',
